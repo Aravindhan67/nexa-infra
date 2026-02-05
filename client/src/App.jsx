@@ -12,7 +12,6 @@ import GalleryPage from './components/GalleryPage';
 import ProductsPage from './components/ProductsPage';
 import ContactPage from './components/ContactPage';
 import ExperiencePage from './components/ExperiencePage';
-import ProjectsPage from './components/ProjectsPage';
 import AuthPage from './components/AuthPage';
 
 function App() {
@@ -48,8 +47,6 @@ function App() {
                 return <ContactPage />;
             case 'experience':
                 return <ExperiencePage onSelectModule={setActiveModule} />;
-            case 'projects':
-                return <ProjectsPage />;
             case 'auth':
                 return <AuthPage onAuthSuccess={handleAuthSuccess} onBack={() => setActiveModule('home')} />;
             default:

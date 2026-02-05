@@ -1,36 +1,16 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
-const dbPath = path.resolve(__dirname, 'v360.sqlite');
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) {
-    console.error('Error opening database', err.message);
-  } else {
-    console.log('Connected to the SQLite database.');
-    db.run(`CREATE TABLE IF NOT EXISTS designs (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
-      image_data TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`);
+dotenv.config();
 
-    db.run(`CREATE TABLE IF NOT EXISTS projects (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      title TEXT,
-      description TEXT,
-      image_url TEXT,
-      type TEXT
-    )`);
-
-    db.run(`CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      username TEXT UNIQUE,
-      email TEXT UNIQUE,
-      password TEXT,
-      location TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )`);
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('Connected to MongoDB Atlas');
+  } catch (err) {
+    console.error('MongoDB connection error:', err.message);
+    process.exit(1);
   }
-});
+};
 
-module.exports = db;
+module.exports = connectDB;

@@ -17,7 +17,6 @@ const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) =>
         { name: 'Home', module: 'home' },
         { name: 'About', module: 'about' },
         { name: 'Products', module: 'products' },
-        { name: 'Projects', module: 'projects' },
         { name: 'Experience', module: 'experience' },
         { name: 'Gallery', module: 'gallery' },
         { name: 'Contact', module: 'contact' },
