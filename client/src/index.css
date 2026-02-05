@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&family=Epilogue:wght@400;600;700&display=swap');
+
+:root {
+    /* Homworks Inspired Palette */
+    --primary-white: #FFFFFF;
+    --accent-dark: #41303E;
+    /* The deep purple/brown from Homworks */
+    --text-grey: #767676;
+    --text-dark: #2D2D2D;
+    --accent-teal: #008080;
+    --bg-light: #F9F9F9;
+    --border-light: #EEEEEE;
+
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--primary-white);
+    color: var(--text-dark);
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+.heading-font {
+    font-family: 'Epilogue', serif;
+    font-weight: 700;
+    color: var(--accent-dark);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition-smooth);
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-family: inherit;
+    transition: var(--transition-smooth);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Section Spacing */
+section {
+    padding: 100px 0;
+}
+
+/* Utilities */
+.text-center {
+    text-align: center;
+}
+
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.grid {
+    display: grid;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--accent-dark);
+    color: white;
+    padding: 12px 32px;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--text-dark);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    border: 1px solid var(--accent-dark);
+    color: var(--accent-dark);
+    padding: 12px 32px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.btn-outline:hover {
+    background-color: var(--accent-dark);
+    color: white;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.8s ease forwards;
+}
+
+/* Reuse existing module styles but wrap them to avoid conflicts if needed */
+/* We'll keep the module specific styles at the bottom or move them to component specific CSS if possible */
+
+/* Existing Module Styles (Adapted) */
+.experience-module-container {
+    background: #000;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: 1000;
+}
