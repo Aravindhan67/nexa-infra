@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 
-const Navigation = ({ activeModule, setActiveModule }) => {
+const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -50,6 +50,19 @@ const Navigation = ({ activeModule, setActiveModule }) => {
                                 </button>
                             </li>
                         ))}
+                        {currentUser ? (
+                            <li className="nav-item">
+                                <span className="nav-link user-pill">
+                                    {currentUser.username}
+                                </span>
+                            </li>
+                        ) : (
+                            <li className="nav-item">
+                                <button className="nav-link" onClick={() => setActiveModule('auth')}>
+                                    LOGIN
+                                </button>
+                            </li>
+                        )}
                     </ul>
                 </nav>
 
@@ -123,6 +136,14 @@ const Navigation = ({ activeModule, setActiveModule }) => {
                 .nav-link:hover, .nav-link.active {
                     opacity: 1;
                     color: var(--accent-teal);
+                }
+
+                .user-pill {
+                    background: rgba(0, 128, 128, 0.1);
+                    color: var(--accent-teal);
+                    padding: 5px 15px;
+                    border-radius: 20px;
+                    font-size: 0.75rem;
                 }
 
                 .btn-get-started {

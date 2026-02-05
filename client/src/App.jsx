@@ -13,9 +13,16 @@ import ProductsPage from './components/ProductsPage';
 import ContactPage from './components/ContactPage';
 import ExperiencePage from './components/ExperiencePage';
 import ProjectsPage from './components/ProjectsPage';
+import AuthPage from './components/AuthPage';
 
 function App() {
     const [activeModule, setActiveModule] = useState('home');
+    const [currentUser, setCurrentUser] = useState(null);
+
+    const handleAuthSuccess = (user) => {
+        setCurrentUser(user);
+        setActiveModule('home');
+    };
 
     const renderContent = () => {
         switch (activeModule) {
@@ -43,6 +50,8 @@ function App() {
                 return <ExperiencePage onSelectModule={setActiveModule} />;
             case 'projects':
                 return <ProjectsPage />;
+            case 'auth':
+                return <AuthPage onAuthSuccess={handleAuthSuccess} onBack={() => setActiveModule('home')} />;
             default:
                 return (
                     <>
@@ -84,7 +93,12 @@ function App() {
 
     return (
         <div className="app-container">
-            <Navigation activeModule={activeModule} setActiveModule={setActiveModule} />
+            <Navigation
+                activeModule={activeModule}
+                setActiveModule={setActiveModule}
+                currentUser={currentUser}
+                onLogout={() => setCurrentUser(null)}
+            />
             <main className="content">
                 {renderContent()}
             </main>

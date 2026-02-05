@@ -14,9 +14,11 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Routes
 const designRoutes = require('./routes/designs');
 const projectRoutes = require('./routes/projects');
+const authRoutes = require('./routes/auth');
 
 app.use('/api/designs', designRoutes);
 app.use('/api/projects', projectRoutes);
+app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => {
   res.send('Virtual 360 Infrastructure API is running...');
