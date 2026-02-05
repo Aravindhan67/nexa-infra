@@ -87,21 +87,24 @@ const ProjectsPage = () => {
 
             <style jsx>{`
                 .projects-page {
-                    background-color: #0c0c0c;
-                    color: white;
+                    background-color: var(--primary-white);
+                    color: var(--text-dark);
                     min-height: 100vh;
+                    padding-top: 80px;
                 }
 
                 .projects-hero {
-                    height: 70vh;
+                    height: 75vh;
                     position: relative;
+                    margin-bottom: 80px;
+                    overflow: hidden;
+                    border-bottom: 1px solid var(--border-light);
                 }
 
                 .panoramic-container {
                     width: 100%;
                     height: 100%;
                     position: relative;
-                    overflow: hidden;
                 }
 
                 .panoramic-img {
@@ -117,7 +120,7 @@ const ProjectsPage = () => {
                     left: 0;
                     width: 100%;
                     height: 100%;
-                    background: linear-gradient(to top, rgba(12,12,12,1), rgba(12,12,12,0.4), transparent);
+                    background: transparent;
                 }
 
                 .panoramic-content {
@@ -131,25 +134,28 @@ const ProjectsPage = () => {
                 .project-category {
                     color: var(--accent-teal);
                     text-transform: uppercase;
-                    letter-spacing: 0.2em;
+                    letter-spacing: 0.3em;
                     font-weight: 700;
-                    font-size: 0.8rem;
+                    font-size: 0.85rem;
                     margin-bottom: 20px;
                     display: block;
                 }
 
                 .project-title {
-                    font-size: 4.5rem;
+                    font-size: 5rem;
                     margin-bottom: 20px;
                     line-height: 1.1;
-                    letter-spacing: -2px;
+                    letter-spacing: -3px;
+                    color: var(--accent-dark);
+                    font-weight: 800;
                 }
 
                 .project-meta {
                     display: flex;
                     gap: 30px;
-                    color: rgba(255,255,255,0.7);
+                    color: var(--text-grey);
                     font-size: 0.9rem;
+                    font-weight: 500;
                 }
 
                 .meta-item {
@@ -159,67 +165,80 @@ const ProjectsPage = () => {
                 }
 
                 .projects-list-section {
-                    padding: 80px 0 120px;
+                    padding-bottom: 120px;
                 }
 
                 .section-header {
-                    margin-bottom: 60px;
+                    margin-bottom: 50px;
+                    border-left: 4px solid var(--accent-teal);
+                    padding-left: 20px;
                 }
 
                 .section-header h2 {
                     font-size: 2.5rem;
-                    margin-bottom: 10px;
+                    margin-bottom: 5px;
+                    color: var(--accent-dark);
                 }
 
                 .section-subtitle {
-                    color: rgba(255,255,255,0.5);
+                    color: var(--text-grey);
+                    font-size: 1.1rem;
                 }
 
                 .projects-grid {
                     display: grid;
-                    grid-template-columns: 1fr;
-                    gap: 20px;
+                    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                    gap: 30px;
                 }
 
                 .project-item {
-                    background: rgba(255,255,255,0.03);
-                    border: 1px solid rgba(255,255,255,0.05);
-                    padding: 30px;
-                    border-radius: 4px;
+                    background: white;
+                    border: 1px solid var(--border-light);
+                    padding: 40px;
+                    border-radius: 8px;
                     cursor: pointer;
-                    transition: all 0.3s ease;
+                    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    position: relative;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
                 }
 
                 .project-item:hover, .project-item.active {
-                    background: rgba(255,255,255,0.08);
+                    transform: translateY(-5px);
+                    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
                     border-color: var(--accent-teal);
                 }
 
                 .project-item.active {
-                    box-shadow: inset 4px 0 0 var(--accent-teal);
+                    background: var(--bg-light);
+                    border-left: 4px solid var(--accent-teal);
                 }
 
                 .project-item h3 {
-                    font-size: 1.5rem;
-                    margin-bottom: 10px;
+                    font-size: 1.8rem;
+                    margin-bottom: 15px;
+                    color: var(--accent-dark);
                 }
 
                 .project-item p {
-                    color: rgba(255,255,255,0.6);
-                    font-size: 0.95rem;
-                    line-height: 1.6;
-                    max-width: 800px;
-                    margin-bottom: 20px;
+                    color: var(--text-grey);
+                    font-size: 1rem;
+                    line-height: 1.7;
+                    margin-bottom: 25px;
                 }
 
                 .view-project-btn {
-                    display: flex;
+                    display: inline-flex;
                     align-items: center;
-                    gap: 8px;
+                    gap: 10px;
                     font-weight: 700;
-                    font-size: 0.75rem;
+                    font-size: 0.85rem;
                     letter-spacing: 0.1em;
                     color: var(--accent-teal);
+                    text-transform: uppercase;
+                }
+
+                .project-item:hover .view-project-btn {
+                    gap: 15px;
                 }
 
                 @media (max-width: 992px) {
@@ -228,6 +247,9 @@ const ProjectsPage = () => {
                     }
                     .projects-hero {
                         height: 50vh;
+                    }
+                    .projects-grid {
+                        grid-template-columns: 1fr;
                     }
                 }
             `}</style>
