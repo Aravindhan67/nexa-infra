@@ -14,8 +14,8 @@ const Hero = ({ onStart }) => {
                         Experience the perfect blend of luxury, functionality, and innovation.
                     </p>
                     <div className="hero-btns animate-fade-in" style={{ animationDelay: '0.4s' }}>
-                        <button className="btn-primary" onClick={onStart}>EXPLORE TOURS</button>
-                        <button className="btn-outline" style={{ marginLeft: '20px' }}>OUR PROJECTS</button>
+                        <button className="btn-primary" onClick={() => onStart('contact')}>GET STARTED</button>
+                        <button className="btn-outline" style={{ marginLeft: '20px' }} onClick={() => onStart('our-projects')}>OUR PROJECTS</button>
                     </div>
                 </div>
                 <div className="hero-image-box animate-fade-in" style={{ animationDelay: '0.2s' }}>

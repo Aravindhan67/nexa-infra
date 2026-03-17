@@ -12,6 +12,7 @@ import GalleryPage from './components/GalleryPage';
 import ProductsPage from './components/ProductsPage';
 import ContactPage from './components/ContactPage';
 import AuthPage from './components/AuthPage';
+import OurProjectsPage from './components/OurProjectsPage';
 
 function App() {
     const [activeModule, setActiveModule] = useState('home');
@@ -42,6 +43,8 @@ function App() {
                 return <GalleryPage />;
             case 'products':
                 return <ProductsPage />;
+            case 'our-projects':
+                return <OurProjectsPage />;
             case 'contact':
                 return <ContactPage />;
             case 'auth':
@@ -55,8 +58,8 @@ function App() {
                         <section className="cta-banner">
                             <div className="container text-center">
                                 <h2 className="cta-title">See. Touch. Discover.</h2>
-                                <p className="cta-desc">Step into the future of interior design with our custom solutions.</p>
-                                <button className="btn-primary" onClick={() => setActiveModule('contact')}>GET STARTED</button>
+                                <p className="cta-desc">Step into the future of interior design with our 360° virtual tours.</p>
+                                <button className="btn-primary" onClick={() => setActiveModule('our-projects')}>VIEW OUR PROJECTS</button>
                             </div>
                             <style jsx>{`
                                 .cta-banner {
