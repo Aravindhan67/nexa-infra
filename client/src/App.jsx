@@ -11,7 +11,6 @@ import AboutPage from './components/AboutPage';
 import GalleryPage from './components/GalleryPage';
 import ProductsPage from './components/ProductsPage';
 import ContactPage from './components/ContactPage';
-import ExperiencePage from './components/ExperiencePage';
 import AuthPage from './components/AuthPage';
 
 function App() {
@@ -45,8 +44,6 @@ function App() {
                 return <ProductsPage />;
             case 'contact':
                 return <ContactPage />;
-            case 'experience':
-                return <ExperiencePage onSelectModule={setActiveModule} />;
             case 'auth':
                 return <AuthPage onAuthSuccess={handleAuthSuccess} onBack={() => setActiveModule('home')} />;
             default:
@@ -57,9 +54,9 @@ function App() {
                         <ProcessSection />
                         <section className="cta-banner">
                             <div className="container text-center">
-                                <h2 className="cta-title">See. Touch. Experience.</h2>
-                                <p className="cta-desc">Step into the future of interior design with our 360° virtual tours.</p>
-                                <button className="btn-primary" onClick={() => setActiveModule('tour')}>GET STARTED</button>
+                                <h2 className="cta-title">See. Touch. Discover.</h2>
+                                <p className="cta-desc">Step into the future of interior design with our custom solutions.</p>
+                                <button className="btn-primary" onClick={() => setActiveModule('contact')}>GET STARTED</button>
                             </div>
                             <style jsx>{`
                                 .cta-banner {

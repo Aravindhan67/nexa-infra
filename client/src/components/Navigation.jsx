@@ -17,7 +17,6 @@ const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) =>
         { name: 'Home', module: 'home' },
         { name: 'About', module: 'about' },
         { name: 'Products', module: 'products' },
-        { name: 'Experience', module: 'experience' },
         { name: 'Gallery', module: 'gallery' },
         { name: 'Contact', module: 'contact' },
     ];
@@ -66,9 +65,6 @@ const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) =>
                 </nav>
 
                 <div className="header-actions">
-                    <button className="btn-get-started" onClick={() => setActiveModule('experience')}>
-                        EXPERIENCE CENTER
-                    </button>
                     <button className="mobile-toggle" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
                         {isMobileMenuOpen ? <X /> : <Menu />}
                     </button>
@@ -143,20 +139,6 @@ const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) =>
                     padding: 5px 15px;
                     border-radius: 20px;
                     font-size: 0.75rem;
-                }
-
-                .btn-get-started {
-                    background: var(--accent-dark);
-                    color: white;
-                    padding: 10px 20px;
-                    border-radius: 4px;
-                    font-size: 0.75rem;
-                    font-weight: 700;
-                    letter-spacing: 0.1em;
-                }
-
-                .btn-get-started:hover {
-                    background: var(--text-dark);
                 }
 
                 .mobile-toggle {
