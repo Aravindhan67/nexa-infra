@@ -32,7 +32,8 @@ const AuthPage = ({ onAuthSuccess, onBack }) => {
             : formData;
 
         try {
-            const response = await fetch(`http://localhost:5000${endpoint}`, {
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const response = await fetch(`${API_URL}${endpoint}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
