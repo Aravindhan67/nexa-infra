@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown, Sun, Moon } from 'lucide-react';
+import { Menu, X, Home, Sun, Moon, LogOut } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
 const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) => {
@@ -61,10 +61,20 @@ const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) =>
                                         </button>
                                     </li>
                                 )}
-                                <li className="nav-item">
+                                <li className="nav-item d-flex align-items-center gap-2">
                                     <span className="nav-link user-pill">
                                         {currentUser.username}
                                     </span>
+                                    <button 
+                                        className="nav-link logout-btn" 
+                                        onClick={() => {
+                                            if(onLogout) onLogout();
+                                            setActiveModule('home');
+                                        }}
+                                        title="Logout"
+                                    >
+                                        <LogOut size={18} />
+                                    </button>
                                 </li>
                             </>
                         ) : (
@@ -150,13 +160,27 @@ const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) =>
                 }
 
                 .user-pill {
-                    background: rgba(0, 128, 128, 0.1);
-                    color: var(--accent-teal);
-                    padding: 5px 15px;
+                    background: var(--primary-accent);
+                    color: white !important;
+                    padding: 4px 12px !important;
                     border-radius: 20px;
-                    font-size: 0.75rem;
+                    font-size: 0.9rem;
+                    font-weight: 500;
                 }
-
+                .logout-btn {
+                    padding: 4px 8px !important;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: var(--text-dark) !important;
+                    opacity: 0.7;
+                    transition: all 0.2s ease;
+                }
+                .logout-btn:hover {
+                    opacity: 1;
+                    color: #e53e3e !important;
+                    transform: scale(1.05);
+                }
                 .header-actions {
                     display: flex;
                     align-items: center;
