@@ -31,15 +31,15 @@ const Footer = () => {
                         <div className="contact-info">
                             <div className="contact-item">
                                 <MapPin size={18} className="contact-icon" />
-                                <span>123 Design Square, Tech Hub, Chennai, India</span>
+                                <span>117/1 Sathy Road, K Kullam,Erode - 638002</span>
                             </div>
                             <div className="contact-item">
                                 <Phone size={18} className="contact-icon" />
-                                <span>+91 98765 43210</span>
+                                <span>+91 8144761678</span>
                             </div>
                             <div className="contact-item">
                                 <Mail size={18} className="contact-icon" />
-                                <span>info@nexainfra.com</span>
+                                <span>nexahomeindia@gmail.com</span>
                             </div>
                         </div>
                     </div>
