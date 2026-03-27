@@ -4,6 +4,7 @@ import LocationPicker from './LocationPicker';
 
 const AuthPage = ({ onAuthSuccess, onBack }) => {
     const [isLogin, setIsLogin] = useState(true);
+    const [isForgotPassword, setIsForgotPassword] = useState(false);
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -12,6 +13,7 @@ const AuthPage = ({ onAuthSuccess, onBack }) => {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,6 +27,30 @@ const AuthPage = ({ onAuthSuccess, onBack }) => {
         e.preventDefault();
         setLoading(true);
         setError('');
+        setSuccessMessage('');
+
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+        if (isForgotPassword) {
+            try {
+                const response = await fetch(`${API_URL}/api/auth/forgot-password`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: formData.email })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) throw new Error(data.error || 'Failed to send reset link');
+                
+                setSuccessMessage(data.message);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+            return;
+        }
 
         const endpoint = isLogin ? '/api/auth/login' : '/api/auth/signup';
         const payload = isLogin
@@ -67,12 +93,18 @@ const AuthPage = ({ onAuthSuccess, onBack }) => {
             <div className="auth-card-container">
                 <div className="auth-card animate-fade-in">
                     <div className="auth-header">
-                        <h1 className="heading-font">{isLogin ? 'WELCOME BACK' : 'JOIN NEXA INFRA'}</h1>
-                        <p>{isLogin ? 'Log in to access your projects' : 'Create an account to start your journey'}</p>
+                        <h1 className="heading-font">
+                            {isForgotPassword ? 'RESET PASSWORD' : (isLogin ? 'WELCOME BACK' : 'JOIN NEXA INFRA')}
+                        </h1>
+                        <p>
+                            {isForgotPassword 
+                                ? 'Enter your email to receive a password reset link'
+                                : (isLogin ? 'Log in to access your projects' : 'Create an account to start your journey')}
+                        </p>
                     </div>
 
                     <form className="auth-form" onSubmit={handleSubmit}>
-                        {!isLogin && (
+                        {!isLogin && !isForgotPassword && (
                             <div className="input-group">
                                 <label><User size={16} /> Username</label>
                                 <input
@@ -98,19 +130,21 @@ const AuthPage = ({ onAuthSuccess, onBack }) => {
                             />
                         </div>
 
-                        <div className="input-group">
-                            <label><Lock size={16} /> Password</label>
-                            <input
-                                type="password"
-                                name="password"
-                                value={formData.password}
-                                onChange={handleInputChange}
-                                required
-                                placeholder="Enter password"
-                            />
-                        </div>
+                        {!isForgotPassword && (
+                            <div className="input-group">
+                                <label><Lock size={16} /> Password</label>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleInputChange}
+                                    required
+                                    placeholder="Enter password"
+                                />
+                            </div>
+                        )}
 
-                        {!isLogin && (
+                        {!isLogin && !isForgotPassword && (
                             <div className="input-group">
                                 <label>Your Location</label>
                                 <LocationPicker onLocationSelect={handleLocationSelect} />
@@ -118,20 +152,39 @@ const AuthPage = ({ onAuthSuccess, onBack }) => {
                         )}
 
                         {error && <div className="auth-error">{error}</div>}
+                        {successMessage && <div className="auth-success" style={{color: '#166534', background: '#bbf7d0', padding: '10px', borderRadius: '4px', fontSize: '0.85rem', textAlign: 'center'}}>{successMessage}</div>}
 
                         <button type="submit" className="btn-primary auth-submit" disabled={loading}>
-                            {loading ? 'PROCESSING...' : (isLogin ? 'LOG IN' : 'SIGN UP')}
+                            {loading ? 'PROCESSING...' : (isForgotPassword ? 'SEND RESET LINK' : (isLogin ? 'LOG IN' : 'SIGN UP'))}
                             {!loading && <ArrowRight size={18} style={{ marginLeft: '10px' }} />}
                         </button>
                     </form>
 
                     <div className="auth-footer">
-                        <p>
-                            {isLogin ? "Don't have an account?" : "Already have an account?"}
-                            <button className="toggle-btn" onClick={() => setIsLogin(!isLogin)}>
-                                {isLogin ? 'SIGN UP NOW' : 'LOG IN NOW'}
-                            </button>
-                        </p>
+                        {isForgotPassword ? (
+                            <p>
+                                Remember your password?
+                                <button type="button" className="toggle-btn" onClick={() => setIsForgotPassword(false)}>
+                                    LOG IN NOW
+                                </button>
+                            </p>
+                        ) : (
+                            <>
+                                <p>
+                                    {isLogin ? "Don't have an account?" : "Already have an account?"}
+                                    <button type="button" className="toggle-btn" onClick={() => setIsLogin(!isLogin)}>
+                                        {isLogin ? 'SIGN UP NOW' : 'LOG IN NOW'}
+                                    </button>
+                                </p>
+                                {isLogin && (
+                                    <p style={{ marginTop: '10px' }}>
+                                        <button type="button" className="toggle-btn" style={{ marginLeft: 0, fontSize: '0.9rem' }} onClick={() => setIsForgotPassword(true)}>
+                                            Forgot your password?
+                                        </button>
+                                    </p>
+                                )}
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

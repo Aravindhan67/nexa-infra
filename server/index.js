@@ -18,12 +18,14 @@ const projectRoutes = require('./routes/projects');
 const authRoutes = require('./routes/auth');
 const contactRoutes = require('./routes/contact');
 const appointmentRoutes = require('./routes/appointments');
+const estimateRoutes = require('./routes/estimates');
 
 app.use('/api/designs', designRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/appointments', appointmentRoutes);
+app.use('/api/estimates', estimateRoutes);
 
 app.get('/', (req, res) => {
   res.send('Virtual 360 Infrastructure API is running...');

@@ -1,6 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+
+// Reuse existing transporter configuration for emails
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+});
 
 // Simple signup route
 router.post('/signup', async (req, res) => {
@@ -43,6 +54,72 @@ router.post('/make-admin', async (req, res) => {
         res.json({ message: 'User upgraded to Admin', user });
     } catch (err) {
         res.status(500).json({ error: 'Database error', details: err.message });
+    }
+});
+
+// Forgot Password Route
+router.post('/forgot-password', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            // Return success even if not found to prevent email enumeration
+            return res.json({ message: 'If that email is registered, a reset link has been sent.' });
+        }
+
+        // Generate token
+        const resetToken = crypto.randomBytes(20).toString('hex');
+        
+        // Save to user object (expires in 1 hour)
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordExpires = Date.now() + 3600000; 
+        await user.save();
+
+        // Send email
+        const resetUrl = `http://localhost:5173/reset-password/${resetToken}`;
+        
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: user.email,
+            subject: 'Nexa Infra - Password Reset',
+            text: `You requested a password reset. \n\nPlease click on the following link, or paste it into your browser to complete the process:\n\n${resetUrl}\n\nIf you did not request this, please ignore this email and your password will remain unchanged.\n`
+        };
+
+        await transporter.sendMail(mailOptions);
+        
+        res.json({ message: 'If that email is registered, a reset link has been sent.' });
+    } catch (error) {
+        console.error('Forgot password error:', error);
+        res.status(500).json({ error: 'Failed to process request.' });
+    }
+});
+
+// Reset Password Route
+router.post('/reset-password/:token', async (req, res) => {
+    try {
+        const { token } = req.params;
+        const { password } = req.body;
+
+        const user = await User.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() } // Ensure token hasn't expired
+        });
+
+        if (!user) {
+            return res.status(400).json({ error: 'Password reset token is invalid or has expired.' });
+        }
+
+        // Update password and clear reset fields
+        user.password = password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+        await user.save();
+
+        res.json({ message: 'Your password has been successfully updated! You may now login.' });
+    } catch (error) {
+        console.error('Reset password error:', error);
+        res.status(500).json({ error: 'Failed to reset password.' });
     }
 });
 

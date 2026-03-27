@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator, House, Maximize, TrendingUp, Sparkles, AlertCircle } from 'lucide-react';
+import { Calculator, House, Maximize, TrendingUp, Sparkles, AlertCircle, Save } from 'lucide-react';
 
-const CostEstimator = ({ onBookNow }) => {
+const CostEstimator = ({ currentUser, onBookNow }) => {
     // Calculator State
     const [sqft, setSqft] = useState(1000);
     const [roomType, setRoomType] = useState('full-home');
     const [quality, setQuality] = useState('premium');
     const [estimate, setEstimate] = useState({ min: 0, max: 0 });
+    const [isSaving, setIsSaving] = useState(false);
+    const [saveMessage, setSaveMessage] = useState('');
 
     // Multipliers
     const typeMultipliers = {
@@ -44,6 +46,35 @@ const CostEstimator = ({ onBookNow }) => {
             currency: 'INR',
             maximumFractionDigits: 0
         }).format(val);
+    };
+
+    const handleSaveEstimate = async () => {
+        if (!currentUser) return;
+        setIsSaving(true);
+        try {
+            const response = await fetch('http://localhost:5000/api/estimates', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: currentUser.email,
+                    sqft,
+                    roomType,
+                    quality,
+                    minCost: estimate.min,
+                    maxCost: estimate.max
+                })
+            });
+            if (response.ok) {
+                setSaveMessage('Saved successfully!');
+                setTimeout(() => setSaveMessage(''), 3000);
+            } else {
+                setSaveMessage('Failed to save.');
+            }
+        } catch (error) {
+            setSaveMessage('Network error.');
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     return (
@@ -148,6 +179,21 @@ const CostEstimator = ({ onBookNow }) => {
                             <button className="btn-primary w-100 book-btn" onClick={onBookNow}>
                                 BOOK A CONSULTATION
                             </button>
+
+                            {currentUser && (
+                                <div className="save-action mt-3 text-center">
+                                    <button 
+                                        className="btn-outline save-btn" 
+                                        onClick={handleSaveEstimate}
+                                        disabled={isSaving}
+                                        style={{ width: '100%', borderColor: 'rgba(255,255,255,0.3)', color: 'white' }}
+                                    >
+                                        <Save size={18} style={{ marginRight: '8px' }}/> 
+                                        {isSaving ? 'SAVING...' : 'SAVE TO MY PORTAL'}
+                                    </button>
+                                    {saveMessage && <p className="save-message mt-2">{saveMessage}</p>}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -359,6 +405,13 @@ const CostEstimator = ({ onBookNow }) => {
                 }
                 .w-100 {
                     width: 100%;
+                }
+                .save-btn:hover {
+                    background: rgba(255,255,255,0.1);
+                }
+                .save-message {
+                    font-size: 0.9rem;
+                    color: var(--accent-teal);
                 }
 
                 @media (max-width: 992px) {

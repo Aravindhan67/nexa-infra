@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar as CalendarIcon, FileUp, MessageSquare, Clock } from 'lucide-react';
+import { Calendar as CalendarIcon, FileUp, MessageSquare, Clock, Calculator, IndianRupee } from 'lucide-react';
 
 const ClientPortal = ({ currentUser }) => {
     const [appointments, setAppointments] = useState([]);
+    const [estimates, setEstimates] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -18,12 +19,18 @@ const ClientPortal = ({ currentUser }) => {
 
     const fetchMyAppointments = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/appointments/me/${currentUser.email}`);
-            if (response.ok) {
-                const data = await response.json();
-                setAppointments(data);
-            } else {
-                setError('Failed to fetch your appointments');
+            const [aptRes, estRes] = await Promise.all([
+                fetch(`http://localhost:5000/api/appointments/me/${currentUser.email}`),
+                fetch(`http://localhost:5000/api/estimates/me/${currentUser.email}`)
+            ]);
+            
+            if (aptRes.ok) {
+                const aptData = await aptRes.json();
+                setAppointments(aptData);
+            }
+            if (estRes.ok) {
+                const estData = await estRes.json();
+                setEstimates(estData);
             }
         } catch (err) {
             setError('Could not connect to server');
@@ -31,6 +38,8 @@ const ClientPortal = ({ currentUser }) => {
             setIsLoading(false);
         }
     };
+
+    const formatCurrency = (val) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(val);
 
     if (error) {
         return (
@@ -68,7 +77,7 @@ const ClientPortal = ({ currentUser }) => {
                                 <p>You haven't booked any consultations yet.</p>
                             </div>
                         ) : (
-                            <div className="appointments-list">
+                            <div className="appointments-list mb-5">
                                 {appointments.map((apt) => (
                                     <div key={apt._id} className="appointment-card">
                                         <div className="apt-header">
@@ -82,6 +91,41 @@ const ClientPortal = ({ currentUser }) => {
                                         </div>
                                         <div className="apt-body">
                                             <p className="project-desc"><strong>Project:</strong> {apt.projectDetails || 'No details provided'}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+
+                        <div className="section-header mt-5">
+                            <Calculator size={24} color="var(--primary-accent)" />
+                            <h2>Saved Estimates</h2>
+                        </div>
+                        
+                        {isLoading ? (
+                            <div className="loading-state">Loading estimates...</div>
+                        ) : estimates.length === 0 ? (
+                            <div className="empty-state">
+                                <p>You haven't saved any cost estimates yet.</p>
+                            </div>
+                        ) : (
+                            <div className="appointments-list">
+                                {estimates.map((est) => (
+                                    <div key={est._id} className="appointment-card">
+                                        <div className="apt-header">
+                                            <div className="apt-date-time">
+                                                <span className="date">{est.roomType.toUpperCase().replace('-', ' ')}</span>
+                                                <span className="time">{est.sqft} sqft • {est.quality}</span>
+                                            </div>
+                                            <span className="date">
+                                                {new Date(est.createdAt).toLocaleDateString()}
+                                            </span>
+                                        </div>
+                                        <div className="apt-body">
+                                            <p className="project-desc d-flex align-items-center gap-2">
+                                                <IndianRupee size={16} color="var(--accent-teal)" />
+                                                <strong>{formatCurrency(est.minCost)}</strong> - <strong>{formatCurrency(est.maxCost)}</strong>
+                                            </p>
                                         </div>
                                     </div>
                                 ))}
@@ -219,6 +263,12 @@ const ClientPortal = ({ currentUser }) => {
                     color: var(--text-grey);
                     line-height: 1.6;
                     margin: 0;
+                }
+                .mt-5 {
+                    margin-top: 3rem;
+                }
+                .mb-5 {
+                    margin-bottom: 3rem;
                 }
 
                 /* Actions Right */

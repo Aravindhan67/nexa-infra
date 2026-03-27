@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import ServicesSection from './components/ServicesSection';
@@ -17,10 +17,24 @@ import BookingPage from './components/BookingPage';
 import AdminDashboard from './components/AdminDashboard';
 import CostEstimator from './components/CostEstimator';
 import ClientPortal from './components/ClientPortal';
+import ResetPassword from './components/ResetPassword';
 
 function App() {
     const [activeModule, setActiveModule] = useState('home');
     const [currentUser, setCurrentUser] = useState(null);
+    const [resetToken, setResetToken] = useState('');
+
+    useEffect(() => {
+        // Simple custom routing for reset password link support
+        const path = window.location.pathname;
+        if (path.startsWith('/reset-password/')) {
+            const token = path.split('/')[2];
+            if (token) {
+                setResetToken(token);
+                setActiveModule('reset-password');
+            }
+        }
+    }, []);
 
     const handleAuthSuccess = (user) => {
         setCurrentUser(user);
@@ -52,7 +66,7 @@ function App() {
             case 'contact':
                 return <ContactPage />;
             case 'estimator':
-                return <CostEstimator onBookNow={() => setActiveModule('booking')} />;
+                return <CostEstimator currentUser={currentUser} onBookNow={() => setActiveModule('booking')} />;
             case 'booking':
                 return <BookingPage />;
             case 'portal':
@@ -61,6 +75,16 @@ function App() {
                 return <AdminDashboard currentUser={currentUser} />;
             case 'auth':
                 return <AuthPage onAuthSuccess={handleAuthSuccess} onBack={() => setActiveModule('home')} />;
+            case 'reset-password':
+                return (
+                    <ResetPassword 
+                        token={resetToken} 
+                        onBackToLogin={() => { 
+                            window.history.pushState({}, '', '/'); 
+                            setActiveModule('auth'); 
+                        }} 
+                    />
+                );
             default:
                 return (
                     <>
