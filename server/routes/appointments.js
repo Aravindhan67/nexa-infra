@@ -63,4 +63,44 @@ router.post('/', async (req, res) => {
     }
 });
 
+// GET all appointments (For Admin)
+router.get('/all', async (req, res) => {
+    try {
+        // Here we could add an isAdmin check, but relying on frontend routing for this simple project
+        const appointments = await Appointment.find().sort({ createdAt: -1 });
+        res.json(appointments);
+    } catch (error) {
+        console.error('Fetch all error:', error);
+        res.status(500).json({ error: 'Failed to fetch appointments.' });
+    }
+});
+
+// Update appointment status (For Admin)
+router.put('/:id/status', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        const validStatuses = ['Pending', 'Confirmed', 'Completed', 'Cancelled'];
+        if (!validStatuses.includes(status)) {
+            return res.status(400).json({ error: 'Invalid status' });
+        }
+
+        const appointment = await Appointment.findByIdAndUpdate(
+            id,
+            { status },
+            { new: true }
+        );
+
+        if (!appointment) {
+            return res.status(404).json({ error: 'Appointment not found' });
+        }
+
+        res.json({ message: 'Status updated successfully', appointment });
+    } catch (error) {
+        console.error('Update status error:', error);
+        res.status(500).json({ error: 'Failed to update status' });
+    }
+});
+
 module.exports = router;

@@ -53,11 +53,20 @@ const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) =>
                             </li>
                         ))}
                         {currentUser ? (
-                            <li className="nav-item">
-                                <span className="nav-link user-pill">
-                                    {currentUser.username}
-                                </span>
-                            </li>
+                            <>
+                                {currentUser.role === 'admin' && (
+                                    <li className="nav-item">
+                                        <button className={`nav-link ${activeModule === 'admin' ? 'active' : ''}`} onClick={() => setActiveModule('admin')}>
+                                            ADMIN
+                                        </button>
+                                    </li>
+                                )}
+                                <li className="nav-item">
+                                    <span className="nav-link user-pill">
+                                        {currentUser.username}
+                                    </span>
+                                </li>
+                            </>
                         ) : (
                             <li className="nav-item">
                                 <button className="nav-link" onClick={() => setActiveModule('auth')}>

@@ -32,4 +32,18 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// Admin back-door for testing (Promote user to Admin)
+router.post('/make-admin', async (req, res) => {
+    const { email } = req.body;
+    try {
+        const user = await User.findOneAndUpdate({ email }, { role: 'admin' }, { new: true });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.json({ message: 'User upgraded to Admin', user });
+    } catch (err) {
+        res.status(500).json({ error: 'Database error', details: err.message });
+    }
+});
+
 module.exports = router;

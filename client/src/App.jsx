@@ -14,6 +14,7 @@ import ContactPage from './components/ContactPage';
 import AuthPage from './components/AuthPage';
 import OurProjectsPage from './components/OurProjectsPage';
 import BookingPage from './components/BookingPage';
+import AdminDashboard from './components/AdminDashboard';
 
 function App() {
     const [activeModule, setActiveModule] = useState('home');
@@ -50,6 +51,8 @@ function App() {
                 return <ContactPage />;
             case 'booking':
                 return <BookingPage />;
+            case 'admin':
+                return <AdminDashboard currentUser={currentUser} />;
             case 'auth':
                 return <AuthPage onAuthSuccess={handleAuthSuccess} onBack={() => setActiveModule('home')} />;
             default:
