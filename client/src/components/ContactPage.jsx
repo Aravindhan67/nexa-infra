@@ -18,21 +18,21 @@ const ContactPage = () => {
                                 <div className="contact-icon-box"><MapPin size={24} /></div>
                                 <div>
                                     <h3>Our Office</h3>
-                                    <p>123 Design Square, Tech Hub, Chennai - 600001</p>
+                                    <p>117/1 Sathy Road, K Kullam,Erode - 638002</p>
                                 </div>
                             </div>
                             <div className="contact-item">
                                 <div className="contact-icon-box"><Phone size={24} /></div>
                                 <div>
                                     <h3>Call Us</h3>
-                                    <p>+91 98765 43210</p>
+                                    <p>+91 8144761678</p>
                                 </div>
                             </div>
                             <div className="contact-item">
                                 <div className="contact-icon-box"><Mail size={24} /></div>
                                 <div>
                                     <h3>Email Us</h3>
-                                    <p>info@nexainfra.com</p>
+                                    <p>nexahomeindia@gmail.com</p>
                                 </div>
                             </div>
                         </div>

@@ -22,7 +22,7 @@ const Hero = ({ onStart }) => {
                     <div className="hero-image-overlay"></div>
                     {/* Fallback image if custom ones aren't available */}
                     <img
-                        src="/OIP.jpg"
+                        src="https://tse4.mm.bing.net/th/id/OIP.AFdOoDmns7MnFopWR_lENwHaFj?pid=Api&P=0&h=180"
                         alt="Modern Interior Design"
                         className="hero-img"
                     />

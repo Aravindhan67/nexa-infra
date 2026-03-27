@@ -2,9 +2,9 @@ import React from 'react';
 
 const ProductsPage = () => {
     const products = [
-        { title: "Modular Kitchens", img: "https://images.unsplash.com/photo-1556911220-e15224bbbe39?auto=format&fit=crop&w=600&q=80", features: ["L-Shaped", "Island", "U-Shaped", "Parallel"] },
-        { title: "Wardrobes", img: "https://images.unsplash.com/photo-1595428774223-ef52624120ec?auto=format&fit=crop&w=600&q=80", features: ["Sliding", "Hinged", "Walk-in", "Open-shelf"] },
-        { title: "TV Units", img: "https://images.unsplash.com/photo-1593060613302-2888cf36c6bc?auto=format&fit=crop&w=600&q=80", features: ["Wall-mounted", "Floor-standing", "Multi-functional"] },
+        { title: "Modular Kitchens", img: "https://tse1.mm.bing.net/th/id/OIP.c9K7PvUkcLbro1QWRAhJxQHaFj?pid=Api&P=0&h=180", features: ["L-Shaped", "Island", "U-Shaped", "Parallel"] },
+        { title: "Wardrobes", img: "https://tse4.mm.bing.net/th/id/OIP.UDzp4-TRw5sGNSKiA-9aWwHaFE?pid=Api&P=0&h=180", features: ["Sliding", "Hinged", "Walk-in", "Open-shelf"] },
+        { title: "TV Units", img: "https://tse1.mm.bing.net/th/id/OIP.7d8nusSx250twmN38mX83QHaE7?pid=Api&P=0&h=180", features: ["Wall-mounted", "Floor-standing", "Multi-functional"] },
         { title: "Space Saving Furniture", img: "https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&w=600&q=80", features: ["Murphy Beds", "Extendable Tables", "Convertible Sofas"] },
     ];
 

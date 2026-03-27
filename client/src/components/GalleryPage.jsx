@@ -5,7 +5,7 @@ const GalleryPage = () => {
 
     const items = [
         { id: 1, category: 'living', title: 'Modern Living Room', img: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=600&q=80' },
-        { id: 2, category: 'kitchen', title: 'Modular Kitchen', img: 'https://images.unsplash.com/photo-1556911220-e15224bbbe39?auto=format&fit=crop&w=600&q=80' },
+        { id: 2, category: 'kitchen', title: 'Modular Kitchen', img: 'https://tse1.mm.bing.net/th/id/OIP.c9K7PvUkcLbro1QWRAhJxQHaFj?pid=Api&P=0&h=180' },
         { id: 3, category: 'bedroom', title: 'Serene Bedroom', img: 'https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&w=600&q=80' },
         { id: 4, category: 'office', title: 'Corporate Office', img: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=600&q=80' },
         { id: 5, category: 'living', title: 'Minimalist Lounge', img: 'https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&w=600&q=80' },
