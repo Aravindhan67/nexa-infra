@@ -63,6 +63,18 @@ router.post('/', async (req, res) => {
     }
 });
 
+// GET user specific appointments
+router.get('/me/:email', async (req, res) => {
+    try {
+        const { email } = req.params;
+        const appointments = await Appointment.find({ email }).sort({ createdAt: -1 });
+        res.json(appointments);
+    } catch (error) {
+        console.error('Fetch user appointments error:', error);
+        res.status(500).json({ error: 'Failed to fetch your appointments.' });
+    }
+});
+
 // GET all appointments (For Admin)
 router.get('/all', async (req, res) => {
     try {

@@ -15,6 +15,8 @@ import AuthPage from './components/AuthPage';
 import OurProjectsPage from './components/OurProjectsPage';
 import BookingPage from './components/BookingPage';
 import AdminDashboard from './components/AdminDashboard';
+import CostEstimator from './components/CostEstimator';
+import ClientPortal from './components/ClientPortal';
 
 function App() {
     const [activeModule, setActiveModule] = useState('home');
@@ -49,8 +51,12 @@ function App() {
                 return <OurProjectsPage />;
             case 'contact':
                 return <ContactPage />;
+            case 'estimator':
+                return <CostEstimator onBookNow={() => setActiveModule('booking')} />;
             case 'booking':
                 return <BookingPage />;
+            case 'portal':
+                return <ClientPortal currentUser={currentUser} />;
             case 'admin':
                 return <AdminDashboard currentUser={currentUser} />;
             case 'auth':

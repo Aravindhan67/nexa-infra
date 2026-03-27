@@ -21,6 +21,7 @@ const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) =>
         { name: 'Products', module: 'products' },
         { name: 'Our Projects', module: 'our-projects' },
         { name: 'Gallery', module: 'gallery' },
+        { name: 'Estimator', module: 'estimator' },
         { name: 'Contact', module: 'contact' },
         { name: 'Book', module: 'booking' },
     ];
@@ -54,10 +55,16 @@ const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) =>
                         ))}
                         {currentUser ? (
                             <>
-                                {currentUser.role === 'admin' && (
+                                {currentUser.role === 'admin' ? (
                                     <li className="nav-item">
                                         <button className={`nav-link ${activeModule === 'admin' ? 'active' : ''}`} onClick={() => setActiveModule('admin')}>
                                             ADMIN
+                                        </button>
+                                    </li>
+                                ) : (
+                                    <li className="nav-item">
+                                        <button className={`nav-link ${activeModule === 'portal' ? 'active' : ''}`} onClick={() => setActiveModule('portal')}>
+                                            PORTAL
                                         </button>
                                     </li>
                                 )}
