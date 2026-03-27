@@ -13,6 +13,7 @@ import ProductsPage from './components/ProductsPage';
 import ContactPage from './components/ContactPage';
 import AuthPage from './components/AuthPage';
 import OurProjectsPage from './components/OurProjectsPage';
+import BookingPage from './components/BookingPage';
 
 function App() {
     const [activeModule, setActiveModule] = useState('home');
@@ -47,6 +48,8 @@ function App() {
                 return <OurProjectsPage />;
             case 'contact':
                 return <ContactPage />;
+            case 'booking':
+                return <BookingPage />;
             case 'auth':
                 return <AuthPage onAuthSuccess={handleAuthSuccess} onBack={() => setActiveModule('home')} />;
             default:

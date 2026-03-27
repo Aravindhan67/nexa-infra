@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const { isDarkMode, toggleTheme } = useTheme();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -20,6 +22,7 @@ const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) =>
         { name: 'Our Projects', module: 'our-projects' },
         { name: 'Gallery', module: 'gallery' },
         { name: 'Contact', module: 'contact' },
+        { name: 'Book', module: 'booking' },
     ];
 
     return (
@@ -66,6 +69,9 @@ const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) =>
                 </nav>
 
                 <div className="header-actions">
+                    <button className="theme-toggle" onClick={toggleTheme}>
+                        {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+                    </button>
                     <button className="mobile-toggle" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
                         {isMobileMenuOpen ? <X /> : <Menu />}
                     </button>
@@ -142,9 +148,35 @@ const Navigation = ({ activeModule, setActiveModule, currentUser, onLogout }) =>
                     font-size: 0.75rem;
                 }
 
+                .header-actions {
+                    display: flex;
+                    align-items: center;
+                    gap: 15px;
+                }
+
+                .theme-toggle {
+                    color: var(--accent-dark);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 8px;
+                    border-radius: 50%;
+                    background: var(--bg-light);
+                    transition: var(--transition-smooth);
+                }
+
+                .theme-toggle:hover {
+                    background: rgba(0,0,0,0.05);
+                }
+
                 .mobile-toggle {
                     display: none;
                     color: var(--accent-dark);
+                }
+
+                /* Dark theme override for nav menu on mobile */
+                :global(body.dark-theme) .nav-menu {
+                    background: var(--primary-white);
                 }
 
                 @media (max-width: 992px) {

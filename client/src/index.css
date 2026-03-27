@@ -15,6 +15,16 @@
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+body.dark-theme {
+    --primary-white: #121212;
+    --accent-dark: #F5F5F5;
+    --text-grey: #AAAAAA;
+    --text-dark: #E0E0E0;
+    --accent-teal: #00B3B3;
+    --bg-light: #1E1E1E;
+    --border-light: #333333;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
